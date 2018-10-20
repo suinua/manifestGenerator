@@ -1,4 +1,6 @@
-An absolute bare-bones web app.
+# manifestGenerator
+###### for minecraft be
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+# about
+minecraft be向けのmanifestを生成するwebツールです。
+https://suinua.github.io/manifestGenerator
