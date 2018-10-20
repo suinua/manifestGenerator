@@ -1,8 +1,12 @@
 import 'dart:html';
+
 import 'model/Manifest.dart';
+import 'manifestOperation.dart';
 
 void main() {
   querySelector("#generate").onClick.listen(generate);
+  querySelector("#copy").onClick.listen(copyManifest);
+  querySelector("#download").onClick.listen(downloadManifest);
 }
 
 void generate(Event event) {
