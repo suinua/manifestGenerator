@@ -943,6 +943,14 @@
         }
         return result;
       },
+      contains$2: function(receiver, other, startIndex) {
+        if (startIndex > receiver.length)
+          throw H.wrapException(P.RangeError$range(startIndex, 0, receiver.length, null, null));
+        return H.stringContainsUnchecked(receiver, other, startIndex);
+      },
+      contains$1: function($receiver, other) {
+        return this.contains$2($receiver, other, 0);
+      },
       toString$0: function(receiver) {
         return receiver;
       },
@@ -965,6 +973,7 @@
           throw H.wrapException(H.diagnoseIndexError(receiver, index));
         return receiver[index];
       },
+      $isPattern: 1,
       $isString: 1
     }
   }], ["dart._internal", "dart:_internal",, H, {
@@ -2155,6 +2164,10 @@
     applyHooksTransformer: function(transformer, hooks) {
       return transformer(hooks) || hooks;
     },
+    stringContainsUnchecked: function(receiver, other, startIndex) {
+      var t1 = receiver.indexOf(other, startIndex);
+      return t1 >= 0;
+    },
     ReflectionInfo: {
       "^": "Object;jsFunction,data,isAccessor,requiredParameterCount,optionalParameterCount,areOptionalParametersNamed,functionType,0cachedSortedIndices",
       static: {
@@ -2559,6 +2572,7 @@
       toString$0: function(_) {
         return "RegExp/" + this.pattern + "/";
       },
+      $isPattern: 1,
       static: {
         JSSyntaxRegExp_makeNative: function(source, multiLine, caseSensitive, global) {
           var m, i, g, regexp;
@@ -4303,7 +4317,8 @@
       "^": "Object;"
     },
     String: {
-      "^": "Object;"
+      "^": "Object;",
+      $isPattern: 1
     },
     "+String": 0,
     StringBuffer: {
@@ -4890,9 +4905,9 @@
       return;
     },
     changeSectionColor: function(form) {
-      var formText, t1, t2, textSectionSplit, t3, _i, text, colorList, space, textElement, t4, t5;
+      var formText, t1, t2, textSectionSplit, t3, _i, text, colorList, textElement, t4, t5;
       formText = form.textContent;
-      if (formText !== "" && formText !== "\xa7") {
+      if (formText !== "" && formText !== "\xa7" && J.contains$1$s(formText, "\xa7")) {
         t1 = document;
         t2 = t1.activeElement.id;
         if (t2 !== "description" && t2 !== "name") {
@@ -4904,9 +4919,7 @@
           textSectionSplit.splice(0, 1)[0];
           for (t2 = textSectionSplit.length, t3 = form && C.DivElement_methods, _i = 0; _i < textSectionSplit.length; textSectionSplit.length === t2 || (0, H.throwConcurrentModificationError)(textSectionSplit), ++_i) {
             text = textSectionSplit[_i];
-            colorList = P.LinkedHashMap__makeLiteral(["0", "#000000", "1", "#00002A", "2", "#002A00", "3", "#002A2A", "4", "#2A0000", "5", "#2A002A", "6", "#2A2A00", "7", "#2A2A2A", "8", "#151515", "9", "#15153F", "a", "#153F15", "b", "#153F3F", "c", "#3F1515", "d", "#3F153F", "e", "#3F3F15", "f", "#3F3F3F"]);
-            space = t1.createElement("span");
-            space.textContent = " ";
+            colorList = P.LinkedHashMap__makeLiteral(["0", "#000000", "1", "#0000AA", "2", "#00AA00", "3", "#00AAAA", "4", "#AA0000", "5", "#AA00AA", "6", "#FFAA00", "7", "#AAAAAA", "8", "#555555", "9", "#5555FF", "a", "#55FF55", "b", "#55FFFF", "c", "#FF5555", "d", "#FF55FF", "e", "#FFFF55", "f", "#FFFFFF"]);
             textElement = t1.createElement("span");
             t4 = textElement.style;
             t5 = colorList.$index(0, J.$index$asx(text, 0));
@@ -4914,7 +4927,6 @@
             t4.color = t5 == null ? "" : t5;
             textElement.textContent = C.JSString_methods.$add("\xa7", text);
             t3.append$1(form, textElement);
-            C.DivElement_methods.append$1(form, space);
           }
         }
       }
@@ -5087,6 +5099,9 @@
   };
   J.codeUnitAt$1$s = function(receiver, a0) {
     return J.getInterceptor$s(receiver).codeUnitAt$1(receiver, a0);
+  };
+  J.contains$1$s = function(receiver, a0) {
+    return J.getInterceptor$s(receiver).contains$1(receiver, a0);
   };
   J.toString$0$ = function(receiver) {
     return J.getInterceptor$(receiver).toString$0(receiver);
