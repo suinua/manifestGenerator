@@ -1,12 +1,27 @@
 import 'dart:html';
+import 'dart:async';
 
 import 'model/Manifest.dart';
 import 'manifestOperation.dart';
+import 'formOperation.dart';
 
-void main() {
+void main() async {
   querySelector("#generate").onClick.listen(generate);
   querySelector("#copy").onClick.listen(copyManifest);
   querySelector("#download").onClick.listen(downloadManifest);
+
+  DivElement descriptionElement = querySelector("#description");
+  DivElement nameElement = querySelector("#name");
+
+  for (var i =0; i < 100; i++) {
+    descriptionElement = querySelector("#description");
+    nameElement = querySelector("#name");
+
+    changeSectionColor(descriptionElement);
+    changeSectionColor(nameElement);
+
+    await Future.delayed(Duration(seconds: 1));
+  }
 }
 
 void generate(Event event) {
@@ -22,12 +37,10 @@ void generate(Event event) {
       ..cols = 30
       ..rows = 5
       ..value = formData.asText();
-    
-    insertTarget.append(newResultElement);
 
+    insertTarget.append(newResultElement);
   } else {
     resultElement.value = formData.asText();
-
   }
 }
 
@@ -35,8 +48,8 @@ Manifest getFormData() {
   SelectElement typeElement = querySelector("#type");
   String type = typeElement.value;
 
-  InputElement nameElement = querySelector("#name");
-  String name = nameElement.value;
+  DivElement nameElement = querySelector("#name");
+  String name = nameElement.text;
 
   TextAreaElement descriptionElement = querySelector("#description");
   String description = descriptionElement.value;
