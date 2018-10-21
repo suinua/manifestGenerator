@@ -583,7 +583,7 @@
       toString$0: ["super$Interceptor$toString", function(receiver) {
         return "Instance of '" + H.Primitives_objectTypeName(receiver) + "'";
       }],
-      "%": "DOMError|MediaError|Navigator|NavigatorConcurrentHardware|NavigatorUserMediaError|OverconstrainedError|PositionError|SQLError"
+      "%": "DOMError|MediaError|NavigatorUserMediaError|OverconstrainedError|PositionError|SQLError"
     },
     JSBool: {
       "^": "Interceptor;",
@@ -943,14 +943,6 @@
         }
         return result;
       },
-      contains$2: function(receiver, other, startIndex) {
-        if (startIndex > receiver.length)
-          throw H.wrapException(P.RangeError$range(startIndex, 0, receiver.length, null, null));
-        return H.stringContainsUnchecked(receiver, other, startIndex);
-      },
-      contains$1: function($receiver, other) {
-        return this.contains$2($receiver, other, 0);
-      },
       toString$0: function(receiver) {
         return receiver;
       },
@@ -973,7 +965,6 @@
           throw H.wrapException(H.diagnoseIndexError(receiver, index));
         return receiver[index];
       },
-      $isPattern: 1,
       $isString: 1
     }
   }], ["dart._internal", "dart:_internal",, H, {
@@ -1272,16 +1263,6 @@
       if (trace != null)
         return trace;
       return exception.$cachedTrace = new H._StackTrace(exception);
-    },
-    fillLiteralMap: function(keyValuePairs, result) {
-      var $length, index, index0, index1;
-      $length = keyValuePairs.length;
-      for (index = 0; index < $length; index = index1) {
-        index0 = index + 1;
-        index1 = index0 + 1;
-        result.$indexSet(0, keyValuePairs[index], keyValuePairs[index0]);
-      }
-      return result;
     },
     invokeClosure: function(closure, numberOfArguments, arg1, arg2, arg3, arg4) {
       H.interceptedTypeCheck(closure, "$isFunction");
@@ -2164,10 +2145,6 @@
     applyHooksTransformer: function(transformer, hooks) {
       return transformer(hooks) || hooks;
     },
-    stringContainsUnchecked: function(receiver, other, startIndex) {
-      var t1 = receiver.indexOf(other, startIndex);
-      return t1 >= 0;
-    },
     ReflectionInfo: {
       "^": "Object;jsFunction,data,isAccessor,requiredParameterCount,optionalParameterCount,areOptionalParametersNamed,functionType,0cachedSortedIndices",
       static: {
@@ -2556,13 +2533,13 @@
       }
     },
     initHooks_closure0: {
-      "^": "Closure:7;getUnknownTag",
+      "^": "Closure:6;getUnknownTag",
       call$2: function(o, tag) {
         return this.getUnknownTag(o, tag);
       }
     },
     initHooks_closure1: {
-      "^": "Closure:8;prototypeForTag",
+      "^": "Closure:7;prototypeForTag",
       call$1: function(tag) {
         return this.prototypeForTag(H.stringTypeCheck(tag));
       }
@@ -2572,20 +2549,15 @@
       toString$0: function(_) {
         return "RegExp/" + this.pattern + "/";
       },
-      $isPattern: 1,
       static: {
         JSSyntaxRegExp_makeNative: function(source, multiLine, caseSensitive, global) {
-          var m, i, g, regexp;
-          m = multiLine ? "m" : "";
-          i = caseSensitive ? "" : "i";
-          g = global ? "g" : "";
-          regexp = function(source, modifiers) {
+          var regexp = function(source, modifiers) {
             try {
               return new RegExp(source, modifiers);
             } catch (e) {
               return e;
             }
-          }(source, m + i + g);
+          }(source, "" + "" + "");
           if (regexp instanceof RegExp)
             return regexp;
           throw H.wrapException(P.FormatException$("Illegal RegExp pattern (" + String(regexp) + ")", source, null));
@@ -2703,14 +2675,9 @@
       self.setImmediate(H.convertDartClosureToJS(new P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback(H.functionTypeCheck(callback, {func: 1, ret: -1})), 0));
     }, "call$1", "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", 4, 0, 2],
     _AsyncRun__scheduleImmediateWithTimer: [function(callback) {
-      P.Timer__createTimer(C.Duration_0, H.functionTypeCheck(callback, {func: 1, ret: -1}));
-    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 2],
-    Timer__createTimer: function(duration, callback) {
-      var milliseconds;
       H.functionTypeCheck(callback, {func: 1, ret: -1});
-      milliseconds = C.JSInt_methods._tdivFast$1(duration._duration, 1000);
-      return P._TimerImpl$(milliseconds < 0 ? 0 : milliseconds, callback);
-    },
+      P._TimerImpl$(0, callback);
+    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 2],
     _makeAsyncAwaitCompleter: function($T) {
       return new P._AsyncAwaitCompleter(new P._SyncCompleter(new P._Future(0, $.Zone__current, [$T]), [$T]), false, [$T]);
     },
@@ -2765,11 +2732,6 @@
         };
       }($function, 1);
       return $.Zone__current.registerBinaryCallback$3$1(new P._wrapJsFunctionForAsync_closure($protected), P.Null, P.int, null);
-    },
-    Future_Future$delayed: function(duration, computation, $T) {
-      var result = new P._Future(0, $.Zone__current, [$T]);
-      P.Timer_Timer(duration, new P.Future_Future$delayed_closure(result, computation));
-      return result;
     },
     _registerErrorHandler: function(errorHandler, zone) {
       if (H.functionTypeTest(errorHandler, {func: 1, args: [P.Object, P.StackTrace]}))
@@ -2850,17 +2812,6 @@
     StreamIterator_StreamIterator: function(stream, $T) {
       return new P._StreamIterator(H.assertSubtype(stream, "$isStream", [$T], "$asStream"), false, [$T]);
     },
-    Timer_Timer: function(duration, callback) {
-      var t1, t2;
-      t1 = {func: 1, ret: -1};
-      H.functionTypeCheck(callback, t1);
-      t2 = $.Zone__current;
-      if (t2 === C.C__RootZone) {
-        t2.toString;
-        return P.Timer__createTimer(duration, callback);
-      }
-      return P.Timer__createTimer(duration, H.functionTypeCheck(t2.bindCallbackGuarded$1(callback), t1));
-    },
     _rootHandleUncaughtError: function($self, $parent, zone, error, stackTrace) {
       var t1 = {};
       t1.error = error;
@@ -2933,7 +2884,7 @@
       }
     },
     _AsyncRun__initializeScheduleImmediate_closure: {
-      "^": "Closure:9;_box_0,div,span",
+      "^": "Closure:8;_box_0,div,span",
       call$1: function(callback) {
         var t1, t2;
         this._box_0.storedCallback = H.functionTypeCheck(callback, {func: 1, ret: -1});
@@ -3013,37 +2964,21 @@
       }
     },
     _awaitOnObject_closure: {
-      "^": "Closure:10;bodyFunction",
+      "^": "Closure:9;bodyFunction",
       call$1: function(result) {
         return this.bodyFunction.call$2(0, result);
       }
     },
     _awaitOnObject_closure0: {
-      "^": "Closure:11;bodyFunction",
+      "^": "Closure:10;bodyFunction",
       call$2: function(error, stackTrace) {
         this.bodyFunction.call$2(1, new H.ExceptionAndStackTrace(error, H.interceptedTypeCheck(stackTrace, "$isStackTrace")));
       }
     },
     _wrapJsFunctionForAsync_closure: {
-      "^": "Closure:12;$protected",
+      "^": "Closure:11;$protected",
       call$2: function(errorCode, result) {
         this.$protected(H.intTypeCheck(errorCode), result);
-      }
-    },
-    Future_Future$delayed_closure: {
-      "^": "Closure:0;result,computation",
-      call$0: function() {
-        var e, s, exception, t1, stackTrace;
-        try {
-          this.result._complete$1(null);
-        } catch (exception) {
-          e = H.unwrapException(exception);
-          s = H.getTraceFromException(exception);
-          t1 = $.Zone__current;
-          stackTrace = H.interceptedTypeCheck(s, "$isStackTrace");
-          t1.toString;
-          this.result._completeError$2(e, stackTrace);
-        }
       }
     },
     _Completer: {
@@ -3060,7 +2995,7 @@
         t1._completeError$2(error, stackTrace);
       }, function(error) {
         return this.completeError$2(error, null);
-      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 13],
+      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 12],
       $isCompleter: 1
     },
     _SyncCompleter: {
@@ -3074,7 +3009,7 @@
         t1._complete$1(value);
       }, function($receiver) {
         return this.complete$1($receiver, null);
-      }, "complete$0", "call$1", "call$0", "get$complete", 1, 2, 14]
+      }, "complete$0", "call$1", "call$0", "get$complete", 1, 2, 13]
     },
     _FutureListener: {
       "^": "Object;0_nextListener,result,state,callback,errorCallback,$ti",
@@ -3371,7 +3306,7 @@
       }
     },
     _Future__chainForeignFuture_closure0: {
-      "^": "Closure:15;target",
+      "^": "Closure:14;target",
       call$2: function(error, stackTrace) {
         this.target._completeError$2(error, H.interceptedTypeCheck(stackTrace, "$isStackTrace"));
       },
@@ -3428,7 +3363,7 @@
       }
     },
     _Future__propagateToListeners_handleWhenCompleteCallback_closure: {
-      "^": "Closure:16;originalSource",
+      "^": "Closure:15;originalSource",
       call$1: function(_) {
         return this.originalSource;
       }
@@ -3649,9 +3584,6 @@
     }
   }], ["dart.collection", "dart:collection",, P, {
     "^": "",
-    LinkedHashMap__makeLiteral: function(keyValuePairs) {
-      return H.fillLiteralMap(keyValuePairs, new H.JsLinkedHashMap(0, 0, [null, null]));
-    },
     IterableBase_iterableToFullString: function(iterable, leftDelimiter, rightDelimiter) {
       var buffer, t1, t2;
       if (P._isToStringVisiting(iterable))
@@ -3731,7 +3663,7 @@
       "^": "MapMixin;"
     },
     MapBase_mapToString_closure: {
-      "^": "Closure:17;_box_0,result",
+      "^": "Closure:16;_box_0,result",
       call$2: function(k, v) {
         var t1, t2;
         t1 = this._box_0;
@@ -3959,74 +3891,6 @@
       "^": "num;"
     },
     "+double": 0,
-    Duration: {
-      "^": "Object;_duration",
-      $add: function(_, other) {
-        return new P.Duration(C.JSInt_methods.$add(this._duration, H.interceptedTypeCheck(other, "$isDuration")._duration));
-      },
-      $sub: function(_, other) {
-        return new P.Duration(C.JSInt_methods.$sub(this._duration, H.interceptedTypeCheck(other, "$isDuration")._duration));
-      },
-      $lt: function(_, other) {
-        return C.JSInt_methods.$lt(this._duration, H.interceptedTypeCheck(other, "$isDuration")._duration);
-      },
-      $gt: function(_, other) {
-        return C.JSInt_methods.$gt(this._duration, H.interceptedTypeCheck(other, "$isDuration")._duration);
-      },
-      $ge: function(_, other) {
-        return C.JSInt_methods.$ge(this._duration, H.interceptedTypeCheck(other, "$isDuration")._duration);
-      },
-      $eq: function(_, other) {
-        if (other == null)
-          return false;
-        if (!(other instanceof P.Duration))
-          return false;
-        return this._duration === other._duration;
-      },
-      get$hashCode: function(_) {
-        return this._duration & 0x1FFFFFFF;
-      },
-      toString$0: function(_) {
-        var t1, t2, twoDigitMinutes, twoDigitSeconds, sixDigitUs;
-        t1 = new P.Duration_toString_twoDigits();
-        t2 = this._duration;
-        if (t2 < 0)
-          return "-" + new P.Duration(0 - t2).toString$0(0);
-        twoDigitMinutes = t1.call$1(C.JSInt_methods._tdivFast$1(t2, 60000000) % 60);
-        twoDigitSeconds = t1.call$1(C.JSInt_methods._tdivFast$1(t2, 1000000) % 60);
-        sixDigitUs = new P.Duration_toString_sixDigits().call$1(t2 % 1000000);
-        return "" + C.JSInt_methods._tdivFast$1(t2, 3600000000) + ":" + H.S(twoDigitMinutes) + ":" + H.S(twoDigitSeconds) + "." + H.S(sixDigitUs);
-      },
-      static: {
-        Duration$: function(days, hours, microseconds, milliseconds, minutes, seconds) {
-          return new P.Duration(864e8 * days + 3600000000 * hours + 60000000 * minutes + 1000000 * seconds + 1000 * milliseconds + microseconds);
-        }
-      }
-    },
-    Duration_toString_sixDigits: {
-      "^": "Closure:6;",
-      call$1: function(n) {
-        if (n >= 100000)
-          return "" + n;
-        if (n >= 10000)
-          return "0" + n;
-        if (n >= 1000)
-          return "00" + n;
-        if (n >= 100)
-          return "000" + n;
-        if (n >= 10)
-          return "0000" + n;
-        return "00000" + n;
-      }
-    },
-    Duration_toString_twoDigits: {
-      "^": "Closure:6;",
-      call$1: function(n) {
-        if (n >= 10)
-          return "" + n;
-        return "0" + n;
-      }
-    },
     Error: {
       "^": "Object;"
     },
@@ -4317,8 +4181,7 @@
       "^": "Object;"
     },
     String: {
-      "^": "Object;",
-      $isPattern: 1
+      "^": "Object;"
     },
     "+String": 0,
     StringBuffer: {
@@ -4360,7 +4223,7 @@
     },
     HtmlElement: {
       "^": "Element;",
-      "%": "HTMLAudioElement|HTMLBRElement|HTMLBaseElement|HTMLButtonElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDataElement|HTMLDataListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLInputElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMarqueeElement|HTMLMediaElement|HTMLMenuElement|HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPictureElement|HTMLPreElement|HTMLProgressElement|HTMLQuoteElement|HTMLScriptElement|HTMLShadowElement|HTMLSlotElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableElement|HTMLTableHeaderCellElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTemplateElement|HTMLTimeElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement|HTMLVideoElement;HTMLElement"
+      "%": "HTMLAudioElement|HTMLBRElement|HTMLBaseElement|HTMLButtonElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDataElement|HTMLDataListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMarqueeElement|HTMLMediaElement|HTMLMenuElement|HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPictureElement|HTMLPreElement|HTMLProgressElement|HTMLQuoteElement|HTMLScriptElement|HTMLShadowElement|HTMLSlotElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableElement|HTMLTableHeaderCellElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTemplateElement|HTMLTimeElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement|HTMLVideoElement;HTMLElement"
     },
     AnchorElement: {
       "^": "HtmlElement;",
@@ -4383,13 +4246,6 @@
     CharacterData: {
       "^": "Node;0length=",
       "%": "CDATASection|CharacterData|Comment|ProcessingInstruction|Text"
-    },
-    CssStyleDeclaration: {
-      "^": "_CssStyleDeclaration_Interceptor_CssStyleDeclarationBase;0length=",
-      "%": "CSS2Properties|CSSStyleDeclaration|MSStyleCSSProperties"
-    },
-    CssStyleDeclarationBase: {
-      "^": "Object;"
     },
     DivElement: {
       "^": "HtmlElement;",
@@ -4450,6 +4306,11 @@
     HtmlDocument: {
       "^": "Document;",
       "%": "HTMLDocument"
+    },
+    InputElement: {
+      "^": "HtmlElement;",
+      $isInputElement: 1,
+      "%": "HTMLInputElement"
     },
     MouseEvent: {
       "^": "UIEvent;",
@@ -4527,13 +4388,10 @@
       }
     },
     _EventStreamSubscription_closure: {
-      "^": "Closure:18;onData",
+      "^": "Closure:17;onData",
       call$1: function(e) {
         return this.onData.call$1(H.interceptedTypeCheck(e, "$isEvent"));
       }
-    },
-    _CssStyleDeclaration_Interceptor_CssStyleDeclarationBase: {
-      "^": "Interceptor+CssStyleDeclarationBase;"
     }
   }], ["dart.dom.indexed_db", "dart:indexed_db",, P, {
     "^": ""
@@ -4783,6 +4641,65 @@
     }
   }], ["", "temp.dart",, Y, {
     "^": "",
+    main: function() {
+      var $async$goto = 0,
+        $async$completer = P._makeAsyncAwaitCompleter(null),
+        t1, t2, t3;
+      var $async$main = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return P._asyncRethrow($async$result, $async$completer);
+        while (true)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = document;
+              t2 = J.get$onClick$x(C.HtmlDocument_methods.querySelector$1(t1, "#generate"));
+              t3 = H.getTypeArgumentByIndex(t2, 0);
+              W._EventStreamSubscription$(t2._target, t2._eventType, H.functionTypeCheck(Y.temp__generate$closure(), {func: 1, ret: -1, args: [t3]}), false, t3);
+              t3 = J.get$onClick$x(C.HtmlDocument_methods.querySelector$1(t1, "#copy"));
+              t2 = H.getTypeArgumentByIndex(t3, 0);
+              W._EventStreamSubscription$(t3._target, t3._eventType, H.functionTypeCheck(Y.temp__copyManifest$closure(), {func: 1, ret: -1, args: [t2]}), false, t2);
+              t1 = J.get$onClick$x(C.HtmlDocument_methods.querySelector$1(t1, "#download"));
+              t2 = H.getTypeArgumentByIndex(t1, 0);
+              W._EventStreamSubscription$(t1._target, t1._eventType, H.functionTypeCheck(Y.temp__downloadManifest$closure(), {func: 1, ret: -1, args: [t2]}), false, t2);
+              // implicit return
+              return P._asyncReturn(null, $async$completer);
+          }
+      });
+      return P._asyncStartSync($async$main, $async$completer);
+    },
+    generate: [function($event) {
+      var formData, t1, insertTarget, resultElement, newResultElement;
+      formData = Y.getFormData();
+      t1 = document;
+      insertTarget = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#form"), "$isDivElement");
+      resultElement = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#result"), "$isTextAreaElement");
+      if (resultElement == null) {
+        newResultElement = t1.createElement("textarea");
+        newResultElement.id = "result";
+        newResultElement.cols = 30;
+        newResultElement.rows = 5;
+        newResultElement.value = formData.asText$0();
+        (insertTarget && C.DivElement_methods).append$1(insertTarget, newResultElement);
+      } else
+        resultElement.value = formData.asText$0();
+    }, "call$1", "temp__generate$closure", 4, 0, 3],
+    getFormData: function() {
+      var t1, type, $name, description;
+      t1 = document;
+      type = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#type"), "$isSelectElement").value;
+      $name = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#name"), "$isInputElement").value;
+      description = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#description"), "$isTextAreaElement").value;
+      if (type === "texture")
+        return new Y.Manifest("resources", $name, description);
+      else if (type === "behavior")
+        return new Y.Manifest("data", $name, description);
+      else if (type === "skinPack")
+        return new Y.Manifest("skin_pack", $name, description);
+      else
+        H.printString(H.S(type) + " is not exist in Manifest types");
+      return;
+    },
     copyManifest: [function($event) {
       var t1, resultElement, t2, copyTextElement;
       t1 = document;
@@ -4819,118 +4736,6 @@
         C.Window_methods.alert$1(window, "\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u307e\u3057\u305f");
       }
     }, "call$1", "temp__downloadManifest$closure", 4, 0, 3],
-    main: function() {
-      var $async$goto = 0,
-        $async$completer = P._makeAsyncAwaitCompleter(null),
-        t1, t2, t3, i, descriptionElement, nameElement;
-      var $async$main = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
-        if ($async$errorCode === 1)
-          return P._asyncRethrow($async$result, $async$completer);
-        while (true)
-          switch ($async$goto) {
-            case 0:
-              // Function start
-              t1 = document;
-              t2 = J.get$onClick$x(C.HtmlDocument_methods.querySelector$1(t1, "#generate"));
-              t3 = H.getTypeArgumentByIndex(t2, 0);
-              W._EventStreamSubscription$(t2._target, t2._eventType, H.functionTypeCheck(Y.temp__generate$closure(), {func: 1, ret: -1, args: [t3]}), false, t3);
-              t3 = J.get$onClick$x(C.HtmlDocument_methods.querySelector$1(t1, "#copy"));
-              t2 = H.getTypeArgumentByIndex(t3, 0);
-              W._EventStreamSubscription$(t3._target, t3._eventType, H.functionTypeCheck(Y.temp__copyManifest$closure(), {func: 1, ret: -1, args: [t2]}), false, t2);
-              t2 = J.get$onClick$x(C.HtmlDocument_methods.querySelector$1(t1, "#download"));
-              t3 = H.getTypeArgumentByIndex(t2, 0);
-              W._EventStreamSubscription$(t2._target, t2._eventType, H.functionTypeCheck(Y.temp__downloadManifest$closure(), {func: 1, ret: -1, args: [t3]}), false, t3);
-              H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#description"), "$isDivElement");
-              H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#name"), "$isDivElement");
-              i = 0;
-            case 2:
-              // for condition
-              if (!(i < 100)) {
-                // goto after for
-                $async$goto = 4;
-                break;
-              }
-              descriptionElement = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#description"), "$isDivElement");
-              nameElement = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#name"), "$isDivElement");
-              Y.changeSectionColor(descriptionElement);
-              Y.changeSectionColor(nameElement);
-              $async$goto = 5;
-              return P._asyncAwait(P.Future_Future$delayed(P.Duration$(0, 0, 0, 0, 0, 1), null, null), $async$main);
-            case 5:
-              // returning from await.
-            case 3:
-              // for update
-              ++i;
-              // goto for condition
-              $async$goto = 2;
-              break;
-            case 4:
-              // after for
-              // implicit return
-              return P._asyncReturn(null, $async$completer);
-          }
-      });
-      return P._asyncStartSync($async$main, $async$completer);
-    },
-    generate: [function($event) {
-      var formData, t1, insertTarget, resultElement, newResultElement;
-      formData = Y.getFormData();
-      t1 = document;
-      insertTarget = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#form"), "$isDivElement");
-      resultElement = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#result"), "$isTextAreaElement");
-      if (resultElement == null) {
-        newResultElement = t1.createElement("textarea");
-        newResultElement.id = "result";
-        newResultElement.cols = 30;
-        newResultElement.rows = 5;
-        newResultElement.value = formData.asText$0();
-        (insertTarget && C.DivElement_methods).append$1(insertTarget, newResultElement);
-      } else
-        resultElement.value = formData.asText$0();
-    }, "call$1", "temp__generate$closure", 4, 0, 3],
-    getFormData: function() {
-      var t1, type, $name, description;
-      t1 = document;
-      type = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#type"), "$isSelectElement").value;
-      $name = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#name"), "$isDivElement").textContent;
-      description = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(t1, "#description"), "$isDivElement").textContent;
-      if (type === "texture")
-        return new Y.Manifest("resources", $name, description);
-      else if (type === "behavior")
-        return new Y.Manifest("data", $name, description);
-      else if (type === "skinPack")
-        return new Y.Manifest("skin_pack", $name, description);
-      else
-        H.printString(H.S(type) + " is not exist in Manifest types");
-      return;
-    },
-    changeSectionColor: function(form) {
-      var formText, t1, t2, textSectionSplit, t3, _i, text, colorList, textElement, t4, t5;
-      formText = form.textContent;
-      if (formText !== "" && formText !== "\xa7" && J.contains$1$s(formText, "\xa7")) {
-        t1 = document;
-        t2 = t1.activeElement.id;
-        if (t2 !== "description" && t2 !== "name") {
-          form.textContent = "";
-          textSectionSplit = H.setRuntimeTypeInfo(formText.split("\xa7"), [P.String]);
-          t2 = textSectionSplit.length;
-          if (0 >= t2)
-            H.throwExpression(P.RangeError$value(0, null, null));
-          textSectionSplit.splice(0, 1)[0];
-          for (t2 = textSectionSplit.length, t3 = form && C.DivElement_methods, _i = 0; _i < textSectionSplit.length; textSectionSplit.length === t2 || (0, H.throwConcurrentModificationError)(textSectionSplit), ++_i) {
-            text = textSectionSplit[_i];
-            colorList = P.LinkedHashMap__makeLiteral(["0", "#000000", "1", "#0000AA", "2", "#00AA00", "3", "#00AAAA", "4", "#AA0000", "5", "#AA00AA", "6", "#FFAA00", "7", "#AAAAAA", "8", "#555555", "9", "#5555FF", "a", "#55FF55", "b", "#55FFFF", "c", "#FF5555", "d", "#FF55FF", "e", "#FFFF55", "f", "#FFFFFF"]);
-            textElement = t1.createElement("span");
-            t4 = textElement.style;
-            t5 = colorList.$index(0, J.$index$asx(text, 0));
-            t4.toString;
-            t4.color = t5 == null ? "" : t5;
-            textElement.textContent = C.JSString_methods.$add("\xa7", text);
-            t3.append$1(form, textElement);
-          }
-        }
-      }
-    },
     Manifest: {
       "^": "Object;type,name,description",
       asText$0: function() {
@@ -5074,13 +4879,6 @@
       return receiver >= a0;
     return J.getInterceptor$n(receiver).$ge(receiver, a0);
   };
-  J.$index$asx = function(receiver, a0) {
-    if (typeof a0 === "number")
-      if (receiver.constructor == Array || typeof receiver == "string" || H.isJsIndexable(receiver, receiver[init.dispatchPropertyName]))
-        if (a0 >>> 0 === a0 && a0 < receiver.length)
-          return receiver[a0];
-    return J.getInterceptor$asx(receiver).$index(receiver, a0);
-  };
   J.$lt$n = function(receiver, a0) {
     if (typeof receiver == "number" && typeof a0 == "number")
       return receiver < a0;
@@ -5099,9 +4897,6 @@
   };
   J.codeUnitAt$1$s = function(receiver, a0) {
     return J.getInterceptor$s(receiver).codeUnitAt$1(receiver, a0);
-  };
-  J.contains$1$s = function(receiver, a0) {
-    return J.getInterceptor$s(receiver).contains$1(receiver, a0);
   };
   J.toString$0$ = function(receiver) {
     return J.getInterceptor$(receiver).toString$0(receiver);
@@ -5132,7 +4927,6 @@
   C.C_Utf8Encoder = new P.Utf8Encoder();
   C.C__JSRandom = new P._JSRandom();
   C.C__RootZone = new P._RootZone();
-  C.Duration_0 = new P.Duration(0);
   C.JS_CONST_0 = function(hooks) {
   if (typeof dartExperimentalFixupGetTag != "function") return hooks;
   hooks.getTag = dartExperimentalFixupGetTag(hooks.getTag);
@@ -5365,7 +5159,7 @@
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = [];
-  init.types = [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: -1, args: [W.Event]}, {func: 1, args: [,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.String, args: [P.int]}, {func: 1, args: [, P.String]}, {func: 1, args: [P.String]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.Null, args: [, P.StackTrace]}, {func: 1, ret: P.Null, args: [P.int,,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: -1, opt: [P.Object]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, args: [W.Event]}];
+  init.types = [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: -1, args: [W.Event]}, {func: 1, args: [,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, args: [, P.String]}, {func: 1, args: [P.String]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.Null, args: [, P.StackTrace]}, {func: 1, ret: P.Null, args: [P.int,,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: -1, opt: [P.Object]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, args: [W.Event]}];
   function convertToFastObject(properties) {
     function MyClass() {
     }
