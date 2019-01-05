@@ -6036,7 +6036,7 @@
       else if (type === "scriptTexture")
         return new Z.ScriptManifest(C.ScriptType_0, $name, description, $.$get$capabilities()._valueList);
       else if (type === "scriptBehavior")
-        return new Z.ScriptManifest(C.ScriptType_0, $name, description, null);
+        return new Z.ScriptManifest(C.ScriptType_1, $name, description, null);
       else
         H.printString(H.S(type) + " is not exist in Manifest types");
       return;
@@ -6151,8 +6151,7 @@
         }
       },
       _textureToString$0: function() {
-        var t1 = this.description;
-        return '{\n  "format_version": 1,\n  "header": {\n    "description": "' + H.S(t1) + '",\n    "name": "' + H.S(this.name) + '",\n    "uuid": "' + F.Uuid$().v1$0() + '",\n    "version": [0, 0, 1]\n  },\n  "modules": [\n    {\n      "description": "' + H.S(t1) + '",\n      "type": "resources",\n      "uuid": "' + F.Uuid$().v1$0() + '",\n      "version": [0, 0, 1]\n    }\n  ],\n  "capabilities": [\n' + H.S(new Z.ScriptManifest__textureToString__stringCapabilities(this).call$0()) + "\n  ]\n}\n";
+        return '{\n  "format_version": 1,\n  "header": {\n    "description": "' + H.S(this.description) + '",\n    "name": "' + H.S(this.name) + '",\n    "uuid": "' + F.Uuid$().v1$0() + '",\n    "version": [0, 0, 1]\n  },\n  "modules": [\n    {\n      "description": "Client Behavior Module",\n      "type": "resources",\n      "uuid": "' + F.Uuid$().v1$0() + '",\n      "version": [0, 0, 1]\n    }\n  ],\n  "capabilities": [\n' + H.S(new Z.ScriptManifest__textureToString__stringCapabilities(this).call$0()) + "\n  ]\n}\n";
       }
     },
     ScriptManifest__textureToString__stringCapabilities: {
@@ -6513,6 +6512,7 @@
   C.List_wSV = H.setRuntimeTypeInfo(Isolate.makeConstantList(["bind", "if", "ref", "repeat", "syntax"]), [P.String]);
   C.List_yrN = H.setRuntimeTypeInfo(Isolate.makeConstantList(["A::href", "AREA::href", "BLOCKQUOTE::cite", "BODY::background", "COMMAND::icon", "DEL::cite", "FORM::action", "IMG::src", "INPUT::src", "INS::cite", "Q::cite", "VIDEO::poster"]), [P.String]);
   C.ScriptType_0 = new Z.ScriptType(0, "ScriptType.texture");
+  C.ScriptType_1 = new Z.ScriptType(1, "ScriptType.behavior");
   C.Utf8Codec_false = new P.Utf8Codec(false);
   $.Closure_functionCounter = 0;
   $.BoundClosure_selfFieldNameCache = null;

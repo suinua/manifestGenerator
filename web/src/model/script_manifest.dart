@@ -15,7 +15,7 @@ class ScriptManifest {
   ScriptManifest.texture(this.name, this.description, this.textureCapabilities)
       : this.scriptType = ScriptType.texture;
   ScriptManifest.behavior(this.name, this.description)
-      : this.scriptType = ScriptType.texture;
+      : this.scriptType = ScriptType.behavior;
 
   String toString() {
     if (scriptType == ScriptType.texture) {
