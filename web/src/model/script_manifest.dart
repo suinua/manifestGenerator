@@ -10,9 +10,7 @@ class ScriptManifest {
   String name;
   String description;
 
-  List<String> textureCapabilities;
-
-  ScriptManifest.texture(this.name, this.description, this.textureCapabilities)
+  ScriptManifest.texture(this.name, this.description)
       : this.scriptType = ScriptType.texture;
   ScriptManifest.behavior(this.name, this.description)
       : this.scriptType = ScriptType.behavior;
@@ -44,7 +42,7 @@ class ScriptManifest {
     },
     {
       "description": "${this.name + ' Client Scripts'}",
-      "type": "clien_data",
+      "type": "client_data",
       "uuid": "${Uuid().v1()}",
       "version": [0, 0, 1]
     }
@@ -54,19 +52,6 @@ class ScriptManifest {
   }
 
   String _textureToString() {
-    String _stringCapabilities() {
-      String result = "";
-
-      for (int index = 0; index < textureCapabilities.length; index ++) {
-         String capability = textureCapabilities[index];
-        if (index + 1 == textureCapabilities.length) {
-         result += '    "$capability"';
-        } else {
-         result += '    "$capability",\n';
-        }        
-      }
-      return result;
-    }
 
     return """
 {
@@ -86,7 +71,7 @@ class ScriptManifest {
     }
   ],
   "capabilities": [
-${_stringCapabilities()}
+    "experimental_custom_ui"
   ]
 }
 """;
