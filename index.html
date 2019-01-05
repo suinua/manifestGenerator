@@ -27,7 +27,7 @@
       <span class="image avatar"><img src="web/images/avatar.jpg" alt="" /></span>
       <h1 id="logo"><a href="#">SUINUA</a></h1>
       <p>Japan,Kanagawa <br>
-          Dartを使ってかきかきしてます
+        Dartを使ってかきかきしてます
       </p>
     </header>
     <nav id="nav">
@@ -75,11 +75,21 @@
             <option value="texture">texture</option>
             <option value="behavior">behavior</option>
             <option value="skinPack">skinPack</option>
+            <option value="scriptTexture">scriptTexture</option>
+            <option value="scriptBehavior">scriptBehavior</option>
+
           </select>
           名前
           <input id="name" type="text">
           説明
           <textarea name="description" id="description" cols="30" rows="5"></textarea>
+          <div id="CapabilityGroup" style="display:none">
+            Capabilities
+            <div id="Capabilities"></div>
+            <div style="display:flex">
+              <input id="newCapabilityText" type="text"><input id="addCapability" type="button" value="plus">
+            </div>
+          </div>
           <input id="generate" type="button" value="生成">
           <input id="copy" type="button" value="copy">
           <input id="download" type="button" value="download">
@@ -118,7 +128,6 @@
   <script src="web/assets/js/util.js"></script>
   <script src="web/assets/js/main.js"></script>
   <script src="web/output/main.js"></script>
-
 
 </body>
 
