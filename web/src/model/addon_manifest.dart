@@ -10,16 +10,16 @@ class Addon {
 
 
 class AddonManifest {
-  Addon type;
+  Addon addonType;
   String name;
   String description;
 
   AddonManifest.texture(this.name, this.description)
-      : this.type = Addon.texture();
+      : this.addonType = Addon.texture();
   AddonManifest.behavior(this.name, this.description)
-      : this.type = Addon.behavior();
+      : this.addonType = Addon.behavior();
   AddonManifest.skinPack(this.name, this.description)
-      : this.type = Addon.skinPack();
+      : this.addonType = Addon.skinPack();
       
   String toString() => """
 {
@@ -33,7 +33,7 @@ class AddonManifest {
   "modules": [
     {
       "description": "${this.description}",
-      "type": "${this.type}",
+      "type": "${this.addonType.type}",
       "uuid": "${Uuid().v1()}",
       "version": [0, 0, 1]
     }

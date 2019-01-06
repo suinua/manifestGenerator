@@ -4645,10 +4645,10 @@
       "^": "Object;_type"
     },
     AddonManifest: {
-      "^": "Object;type,name,description",
+      "^": "Object;addonType,name,description",
       toString$0: function(_) {
         var t1 = this.description;
-        return '{\n  "format_version": 1,\n  "header": {\n    "description": "' + H.S(t1) + '",\n    "name": "' + H.S(this.name) + '",\n    "uuid": "' + F.Uuid$().v1$0() + '",\n    "version": [0, 0, 1]\n  },\n  "modules": [\n    {\n      "description": "' + H.S(t1) + '",\n      "type": "' + this.type.toString$0(0) + '",\n      "uuid": "' + F.Uuid$().v1$0() + '",\n      "version": [0, 0, 1]\n    }\n  ]\n}\n';
+        return '{\n  "format_version": 1,\n  "header": {\n    "description": "' + H.S(t1) + '",\n    "name": "' + H.S(this.name) + '",\n    "uuid": "' + F.Uuid$().v1$0() + '",\n    "version": [0, 0, 1]\n  },\n  "modules": [\n    {\n      "description": "' + H.S(t1) + '",\n      "type": "' + this.addonType._type + '",\n      "uuid": "' + F.Uuid$().v1$0() + '",\n      "version": [0, 0, 1]\n    }\n  ]\n}\n';
       }
     }
   }], ["", "../src/main.dart",, F, {
